@@ -1,12 +1,10 @@
 {
-  "private": true,
   "name": "tasks-vue-4",
-  "version": "6.0.0",
+  "version": "6.0.1",
   "description": "Taskbook for Vue 3 Course on learn.javascript.ru",
-  "type": "module",
-  "main": "index.js",
-  "author": "Grigorii K. Shartsev <me@shgk.me>",
   "license": "UNLICENSED",
+  "author": "Grigorii K. Shartsev <me@shgk.me>",
+  "type": "module",
   "scripts": {
     "build": "vite build",
     "dev": "vite",
@@ -41,8 +39,14 @@
     "vitest": "^1.6.0",
     "vue-tsc": "^2.0.22"
   },
+  "overrides": {
+    "vite": {
+      "rollup": "npm:@rollup/wasm-node"
+    }
+  },
   "engines": {
     "node": "^20.11.0",
     "npm": ">=10.0.0"
-  }
+  },
+  "private": true
 }

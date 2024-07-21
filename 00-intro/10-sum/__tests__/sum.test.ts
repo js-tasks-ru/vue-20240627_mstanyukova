@@ -13,7 +13,7 @@ describe('intro/sum', () => {
       ${10} | ${20} | ${30}
       ${0}  | ${0}  | ${0}
       ${-2} | ${-1} | ${-3}
-    `('Функция sum должна получать $a + $b = $expected', ({a, b, expected}) => {
+    `('Функция sum должна получать $a + $b = $expected', ({ a, b, expected }) => {
       expect(sum(a, b)).toBe(expected)
     })
   })

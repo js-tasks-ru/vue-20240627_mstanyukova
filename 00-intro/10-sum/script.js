@@ -15,4 +15,4 @@ function calculate() {
 a.addEventListener('input', calculate)
 b.addEventListener('input', calculate)
 
-document.querySelector('form').addEventListener('submit', (event) => event.preventDefault())
+document.querySelector('form').addEventListener('submit', event => event.preventDefault())

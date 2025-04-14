@@ -1,12 +1,12 @@
 import { describe, it, expect, beforeAll } from 'vitest'
 import { mount } from '@vue/test-utils'
 import type { VueWrapper, DOMWrapper } from '@vue/test-utils'
-import { WeatherConditionIcons, getWeatherData } from '@/weather.service.ts'
-import WeatherApp from '@/WeatherApp.js'
+import { WeatherConditionIcons, getWeatherData } from '../weather.service.ts'
+import WeatherApp from '../WeatherApp.js'
 
 describe('WeatherApp', () => {
   let weatherData: ReturnType<typeof getWeatherData>
-  let wrapper: VueWrapper<typeof WeatherApp>
+  let wrapper: VueWrapper
   let cards: DOMWrapper<HTMLElement>[]
   beforeAll(() => {
     weatherData = getWeatherData()

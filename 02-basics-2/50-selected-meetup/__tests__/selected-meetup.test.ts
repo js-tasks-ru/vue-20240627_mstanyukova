@@ -2,17 +2,17 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 import type { MockedFunction } from 'vitest'
 import { createWrapperError, flushPromises, mount } from '@vue/test-utils'
 import type { VueWrapper, DOMWrapper } from '@vue/test-utils'
-import SelectedMeetupApp from '@/SelectedMeetupApp.js'
-import { getMeetup } from '@/meetupsService.ts'
-import type { MeetupDTO } from '@/meetups.types.ts'
+import SelectedMeetupApp from '../SelectedMeetupApp.js'
+import { getMeetup } from '../meetupsService.ts'
+import type { MeetupDTO } from '../meetups.types.ts'
 
-vi.mock('@/meetupsService.ts')
+vi.mock('../meetupsService.ts')
 
 const mockMeetups = {
   1: { id: 1, title: 'Meetup 1' },
   2: { id: 2, title: 'Meetup Second' },
   3: { id: 3, title: 'Meetup III' },
-  4: { id: 4, title: '3rd meetup' },
+  4: { id: 4, title: '4th meetup' },
   5: { id: 5, title: 'Meetup 5' },
 } as const as unknown as Record<number, MeetupDTO>
 
@@ -35,7 +35,7 @@ describe('SelectedMeetupApp', () => {
     wrapper = mount(SelectedMeetupApp)
     prevButton = findByText(wrapper, 'button', 'Предыдущий')
     nextButton = findByText(wrapper, 'button', 'Следующий')
-    meetupIdRadioLabels = wrapper.findAll('[role="radiogroup"] label')
+    meetupIdRadioLabels = wrapper.findAll('label')
     meetupIdRadioButtons = meetupIdRadioLabels.map(label => wrapper.find(`input#${label.attributes('for')}`))
   })
 
@@ -81,7 +81,7 @@ describe('SelectedMeetupApp', () => {
     expect(nextButton.attributes('disabled')).toBeDefined()
   })
 
-  it('должно переключать с 3-го на 4-ый митап кнопкой "Следующий", когда был выбран 3-ий и выводить его заголовок из данных, полученных функцией getMeetup', async () => {
+  it('должно переключать с 3-го на 4-ый митап кнопкой "Следующий", когда был выбран 3-ий, и выводить его заголовок из данных, полученных функцией getMeetup', async () => {
     await meetupIdRadioButtons[2].setValue(true)
     await flushPromises()
     await nextButton.trigger('click')
@@ -90,17 +90,18 @@ describe('SelectedMeetupApp', () => {
     expect(nextButton.attributes('disabled')).not.toBeDefined()
     expect(meetupIdRadioButtons[2].element.checked).toBeFalsy()
     expect(meetupIdRadioButtons[3].element.checked).toBeTruthy()
-    expect(wrapper.text()).toContain('3rd meetup')
+    expect(wrapper.text()).toContain('4th meetup')
   })
 
-  it('должно переключать с 4-го на 3-ий митап кнопкой "Предыдущий", когда выбран 4-ый и выводить его заголовок из данных, полученных функцией getMeetup', async () => {
+  it('должно переключать с 4-го на 3-ий митап кнопкой "Предыдущий", когда выбран 4-ый, и выводить его заголовок из данных, полученных функцией getMeetup', async () => {
     await meetupIdRadioButtons[3].setValue(true)
     await flushPromises()
     await prevButton.trigger('click')
+    await flushPromises()
     expect(prevButton.attributes('disabled')).not.toBeDefined()
     expect(nextButton.attributes('disabled')).not.toBeDefined()
     expect(meetupIdRadioButtons[3].element.checked).toBeFalsy()
     expect(meetupIdRadioButtons[2].element.checked).toBeTruthy()
-    expect(wrapper.text()).toContain('3rd meetup')
+    expect(wrapper.text()).toContain('Meetup III')
   })
 })
